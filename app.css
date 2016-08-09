@@ -1,0 +1,69 @@
+body {
+  margin: 0;
+}
+.Maps {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 100vh;
+}
+.Maps--h {
+  flex-direction: column;
+}
+.Map {
+  flex: 1;
+}
+.buttonContainer {
+  position: absolute;
+  z-index: 2;
+  left: .5rem; right: 0;
+  display: flex;
+  font-size: 1.5em;
+}
+@media (max-width: 680px) {
+  .buttonContainer {
+    flex-direction: column
+  }
+  .input ~ .input {
+    margin-top: .5rem;
+  }
+}
+.buttonContainer--top {
+  top: 10px;
+  margin-left: 36px;
+}
+.buttonContainer--bottom {
+  bottom: 10px;
+}
+#switchLayout {
+  cursor: pointer;
+  background-color: #0078e7;
+  color: #fff;
+  padding: .5rem 1rem;
+  border: 0;
+  border-radius: 2px;
+  margin: .5rem;
+}
+#switchLayout::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+.input {
+  margin: 0 .5rem;
+  padding: .5rem .5rem .5rem 1rem;
+  border: 0;
+  border-radius: 2px;
+}
+.leaflet-control-zoom-display {
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  padding-top: 0.3em;
+  font: bold 12px/20px Tahoma, Verdana, sans-serif;
+}
