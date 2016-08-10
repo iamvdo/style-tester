@@ -11,7 +11,26 @@ body {
   flex-direction: column;
 }
 .Map {
+  position: relative;
   flex: 1;
+}
+.Map--0 {
+  max-width: 0;
+  overflow: hidden;
+}
+
+#map--leaflet::after,
+#map--mapboxgl::after {
+  content: 'Leaflet';
+  position: absolute; z-index: 1000;
+  bottom: 0; right: 0; left: 0;
+  height: 16px;
+  background: rgba(0,0,0,.8);
+  color: #fff;
+  text-align: center;
+}
+#map--mapboxgl::after {
+  content: 'Mapbox GL';
 }
 .buttonContainer {
   position: absolute;
@@ -20,8 +39,8 @@ body {
   display: flex;
   font-size: 1.5em;
 }
-@media (max-width: 680px) {
-  .buttonContainer {
+@media (max-width: 500px) {
+  .buttonContainer--top {
     flex-direction: column
   }
   .input ~ .input {
@@ -33,20 +52,24 @@ body {
   margin-left: 36px;
 }
 .buttonContainer--bottom {
-  bottom: 10px;
+  justify-content: center;
+  bottom: 15px;
 }
-#switchLayout {
+.button {
   cursor: pointer;
-  background-color: #0078e7;
+  background: #0078e7;
   color: #fff;
   padding: .5rem 1rem;
   border: 0;
   border-radius: 2px;
   margin: .5rem;
 }
-#switchLayout::-moz-focus-inner {
+.button::-moz-focus-inner {
   padding: 0;
   border: 0;
+}
+.off {
+  background: #555;
 }
 .input {
   margin: 0 .5rem;

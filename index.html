@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Style tester</title>
+  <title>Styles tester</title>
   <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
   <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.css" />
   <link rel="stylesheet" href="app.css">
@@ -12,7 +12,7 @@
   <div class="buttonContainer buttonContainer--top">
     <input class="input" id="styleId" list="styles" value="" size="25">
     <datalist id="styles"></datalist>
-    <input class="input" id="placeId" list="places" value="" size="25">
+    <input class="input" id="placeId" list="places" value="" size="15">
     <datalist id="places"></datalist>
     
   </div>
@@ -21,7 +21,9 @@
     <div class="Map" id="map--mapboxgl"></div>
   </div>
   <div class="buttonContainer buttonContainer--bottom">
-    <button id="switchLayout">Split Layout</button>
+    <button class="button" id="toggleLayout">Toggle Layout</button>
+    <button class="button" id="toggleLeaflet">Toggle Leaflet</button>
+    <button class="button" id="toggleMapboxGL">Toggle MapboxGL</button>
   </div>
   <script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
   <script src="leaflet-zoom.js"></script>

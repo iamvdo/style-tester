@@ -24,15 +24,25 @@ function createMaps (styleToken, center, zoom, setForms) {
   }
 
   function createLeafletMap (id) {
-    var style = styleLeaflet();
-    var map_leaflet = L.map(id, style.opts);
-    L.tileLayer(style.url, style.tilelayer).addTo(map_leaflet);
-    return map_leaflet;
+    var el = document.getElementById(id);
+    if (!el.classList.contains('Map--0')) {
+      var style = styleLeaflet();
+      var map_leaflet = L.map(id, style.opts);
+      L.tileLayer(style.url, style.tilelayer).addTo(map_leaflet);
+      return map_leaflet;
+    } else {
+      return {getContainer: el => el};
+    }
   }
   function createMapboxGLMap (id) {
-    var style = styleMapboxGL(id);
-    mapboxgl.accessToken = STATE.accessToken;
-    return new mapboxgl.Map(style);
+    var el = document.getElementById(id);
+    if (!el.classList.contains('Map--0')) {
+      var style = styleMapboxGL(id);
+      mapboxgl.accessToken = STATE.accessToken;
+      return new mapboxgl.Map(style);
+    } else {
+      return {getContainer: _ => el};
+    }
   }
   function styleLeaflet () {
     return {
@@ -47,7 +57,8 @@ function createMaps (styleToken, center, zoom, setForms) {
       opts: {
         center: center,
         zoom: zoom,
-        maxZoom: STATE.maxZoom
+        maxZoom: STATE.maxZoom,
+        attributionControl: false
       }
     };
   };
@@ -57,7 +68,8 @@ function createMaps (styleToken, center, zoom, setForms) {
       style: 'mapbox://styles/iamvdo/' + styleToken,
       center: centerR,
       zoom: zoom - 1,
-      maxZoom: STATE.maxZoom - 1
+      maxZoom: STATE.maxZoom - 1,
+      attributionControl : false
     }
   }
   function syncMaps (map_leaflet, map_mapboxgl) {
@@ -76,10 +88,14 @@ function createMaps (styleToken, center, zoom, setForms) {
   if (STATE.map_leaflet) {
     STATE.map_leaflet.remove();
   }
-
+  if (STATE.map_mapboxgl) {
+    STATE.map_mapboxgl.remove();
+  }
   // store maps
   STATE.map_leaflet = createLeafletMap('map--leaflet');
   STATE.map_mapboxgl = createMapboxGLMap('map--mapboxgl');
+
+  STATE.actualStyle = styleToken;
 
   // sync leaflet map with mapboxgl one
   syncMaps(STATE.map_leaflet, STATE.map_mapboxgl);
@@ -91,11 +107,11 @@ function createMaps (styleToken, center, zoom, setForms) {
 }
 
 function setForms (styleToken, centerKey) {
-  setStylesForm(styleToken);
+  setStylesForm();
   setPlacesForm(styleToken, centerKey);
 }
 
-function setStylesForm (styleToken) {
+function setStylesForm () {
   // add all styles to datalist
   var styles = document.getElementById('styles');
   Object.keys(STATE.styles).map(id => {
@@ -106,7 +122,7 @@ function setStylesForm (styleToken) {
   });
   // set first style to value
   var styleId = document.getElementById('styleId');
-  styleId.value = styleToken;
+  styleId.value = STATE.actualStyle;
   // events
   styleId.addEventListener('click', evt => {
     styleId.value = '';
@@ -157,13 +173,57 @@ var style = Object.keys(STATE.styles)[0];
 createMaps(style, center, setForms);
 
 // split view vertical/horizontal
-var btn = document.getElementById('switchLayout');
+var btn = document.getElementById('toggleLayout');
 var mapLayout = document.getElementById('mapLayout');
 btn.addEventListener('click', toggleLayout);
 
 function toggleLayout () {
   mapLayout.classList.toggle('Maps--h');
+  redrawMaps();
+}
+
+function redrawMaps () {
   var evt = document.createEvent('UIEvents');
   evt.initUIEvent('resize', true, false, window, 0);
   window.dispatchEvent(evt);
+}
+
+var toggleM = document.getElementById('toggleMapboxGL');
+toggleM.addEventListener('click', toggleMapboxGL);
+var toggleL = document.getElementById('toggleLeaflet');
+toggleL.addEventListener('click', toggleLeaflet);
+
+function toggleMapboxGL () {
+  if (toggleL.classList.contains('off')) {
+    return;
+  }
+  toggleM.classList.toggle('off');
+  var el = STATE.map_mapboxgl.getContainer();
+  el.classList.toggle('Map--0');
+  if (!el.classList.contains('Map--0')) {
+    var leaflet = STATE.map_leaflet;
+    var center = leaflet.getCenter();
+    createMaps(STATE.actualStyle, [center.lat, center.lng], leaflet.getZoom());
+  } else {
+    STATE.map_mapboxgl.remove();
+  }
+  redrawMaps();
+}
+
+function toggleLeaflet () {
+  if (toggleM.classList.contains('off')) {
+    return;
+  }
+  toggleL.classList.toggle('off');
+  var el = STATE.map_leaflet.getContainer();
+  el.classList.toggle('Map--0');
+  if (!el.classList.contains('Map--0')) {
+    var mapbox = STATE.map_mapboxgl;
+    var center = mapbox.getCenter();
+    var zoom = Math.round(mapbox.getZoom() + 1);
+    createMaps(STATE.actualStyle, [center.lat, center.lng], zoom);
+  } else {
+    STATE.map_leaflet.remove();
+  }
+  redrawMaps();
 }
