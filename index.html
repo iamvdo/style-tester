@@ -20,10 +20,10 @@
     <div class="Map" id="map--leaflet"></div>
     <div class="Map" id="map--mapboxgl"></div>
   </div>
-  <div class="buttonContainer buttonContainer--bottom">
+  <div class="buttonContainer buttonContainer--bottom" id="toggles">
     <button class="button" id="toggleLayout">Toggle Layout</button>
-    <button class="button" id="toggleLeaflet">Toggle Leaflet</button>
-    <button class="button" id="toggleMapboxGL">Toggle MapboxGL</button>
+    <button class="button" id="toggleLeaflet" data-map="map_leaflet" data-map2='map_mapboxgl'>Hide Leaflet</button>
+    <button class="button" id="toggleMapboxGL" data-map="map_mapboxgl" data-map2='map_leaflet'>Hide MapboxGL</button>
   </div>
   <script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
   <script src="leaflet-zoom.js"></script>

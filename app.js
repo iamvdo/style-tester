@@ -213,42 +213,39 @@ function redrawMaps () {
   window.dispatchEvent(evt);
 }
 
-var toggleM = document.getElementById('toggleMapboxGL');
-toggleM.addEventListener('click', toggleMapboxGL);
-var toggleL = document.getElementById('toggleLeaflet');
-toggleL.addEventListener('click', toggleLeaflet);
+var toggles = document.getElementById('toggles');
+toggles.addEventListener('click', toggleMap);
 
-function toggleMapboxGL () {
-  if (toggleL.classList.contains('off')) {
-    return;
+function toggleMap (evt) {
+  var btn = evt.target;
+  if (btn.id === 'toggleLayout') {
+    return
   }
-  toggleM.classList.toggle('off');
-  var el = STATE.map_mapboxgl.getContainer();
-  el.classList.toggle('Map--0');
-  if (!el.classList.contains('Map--0')) {
-    var leaflet = STATE.map_leaflet;
-    var center = leaflet.getCenter();
-    createMaps(STATE.actualStyle, [center.lat, center.lng], leaflet.getZoom());
+  var btns = btn.parentNode.children;
+  for (var i = 0; i < btns.length; i++) {
+    if (btns[i] !== btn && btns[i].classList.contains('off')) {
+      return
+    }
+  }
+  btn.classList.toggle('off');
+  if (btn.classList.contains('off')) {
+    btn.innerHTML = btn.innerHTML.replace('Hide', 'Show');
   } else {
-    STATE.map_mapboxgl.remove();
+    btn.innerHTML = btn.innerHTML.replace('Show', 'Hide');
   }
-  redrawMaps();
-}
-
-function toggleLeaflet () {
-  if (toggleM.classList.contains('off')) {
-    return;
-  }
-  toggleL.classList.toggle('off');
-  var el = STATE.map_leaflet.getContainer();
+  var btn_map = STATE[btn.dataset.map];
+  var btn_map2 = STATE[btn.dataset.map2];
+  var el = btn_map.getContainer();
   el.classList.toggle('Map--0');
   if (!el.classList.contains('Map--0')) {
-    var mapbox = STATE.map_mapboxgl;
-    var center = mapbox.getCenter();
-    var zoom = Math.round(mapbox.getZoom() + 1);
+    var center = btn_map2.getCenter();
+    var zoom = btn_map2.getZoom();
+    if (btn.dataset.map === 'map_mapboxgl') {
+      zoom = Math.round(zoom + 1);
+    }
     createMaps(STATE.actualStyle, [center.lat, center.lng], zoom);
   } else {
-    STATE.map_leaflet.remove();
+    btn_map.remove();
   }
   redrawMaps();
 }
