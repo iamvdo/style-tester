@@ -39,7 +39,10 @@ function createMaps (styleToken, center, zoom, setForms) {
     if (!el.classList.contains('Map--0')) {
       var style = styleMapboxGL(id);
       mapboxgl.accessToken = STATE.accessToken;
-      return new mapboxgl.Map(style);
+      var map_mapboxgl = new mapboxgl.Map(style);
+      map_mapboxgl.addControl(new mapboxgl.Navigation());
+      map_mapboxgl.addControl(new mapboxgl.ZoomDisplay());
+      return map_mapboxgl;
     } else {
       return {getContainer: _ => el};
     }

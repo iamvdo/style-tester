@@ -16,6 +16,7 @@ body {
 }
 .Map--0 {
   max-width: 0;
+  max-height: 0;
   overflow: hidden;
 }
 
@@ -35,11 +36,11 @@ body {
 .buttonContainer {
   position: absolute;
   z-index: 2;
-  left: .5rem; right: 0;
+  left: 10px; right: 10px;
   display: flex;
   font-size: 1.5em;
 }
-@media (max-width: 500px) {
+@media (max-width: 510px) {
   .buttonContainer--top {
     flex-direction: column
   }
@@ -49,7 +50,8 @@ body {
 }
 .buttonContainer--top {
   top: 10px;
-  margin-left: 36px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 .buttonContainer--bottom {
   justify-content: center;
@@ -72,21 +74,29 @@ body {
   background: #555;
 }
 .input {
-  margin: 0 .5rem;
+  margin: 0 10px;
   padding: .5rem .5rem .5rem 1rem;
   border: 0;
   border-radius: 2px;
 }
-.leaflet-control-zoom-display {
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  width: 30px;
+  height: 30px;
+}
+.leaflet-control-zoom-display,
+.mapboxgl-zoom-display {
   background-color: #fff;
   border-bottom: 1px solid #ccc;
-  width: 26px;
-  height: 26px;
-  line-height: 26px;
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
   display: block;
   text-align: center;
   text-decoration: none;
   color: black;
-  padding-top: 0.3em;
-  font: bold 12px/20px Tahoma, Verdana, sans-serif;
+  font: bold 12px/30px Tahoma, Verdana, sans-serif;
+}
+.mapboxgl-zoom-display small {
+  font-size: 8px;
 }
