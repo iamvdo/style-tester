@@ -73,16 +73,41 @@ function createMaps (styleToken, center, zoom, setForms) {
     }
   }
   function syncMaps (map_leaflet, map_mapboxgl) {
-    map_leaflet.on('move', leaflet2gl)
-    function leaflet2gl (evt) {
-      map_mapboxgl.easeTo({
-        center: map_leaflet.getCenter(),
-        zoom: map_leaflet.getZoom() - 1,
-        bearing: 0,
-        pitch: 0
-      });
+
+    off(); on();
+    function on() {
+      map_leaflet.on('move', leaflet2gl);
+      map_mapboxgl.on('move', gl2leaflet);
+    }
+    function off() {
+      map_leaflet.off('move', leaflet2gl);
+      map_mapboxgl.off('move', gl2leaflet);
+    }
+    function leaflet2gl() {
+      off();
+      copyPosition('leaflet', map_leaflet, map_mapboxgl);
+      on();
+    }
+    function gl2leaflet() {
+      off();
+      copyPosition('mapboxgl', map_mapboxgl, map_leaflet);
+      on();
     }
   }
+  function copyPosition(type, a, b) {
+      var center = a.getCenter();
+      var zoom = Math.round(a.getZoom());
+      if (type === 'leaflet') {
+        b.jumpTo({
+          center: center,
+          zoom: zoom - 1,
+          bearing: 0,
+          pitch: 0
+        });
+      } else {
+        b.setView(center, zoom + 1, {animate: false});
+      }
+    }
 
   // create Leaflet map
   if (STATE.map_leaflet) {
