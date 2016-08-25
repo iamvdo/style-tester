@@ -9,7 +9,8 @@ var STATE = {
   },
   styles: {
     cir4w5nu1000vclnnqashz1ts: 'Contours (mountains)',
-    cir87x1cf0004h4m2mwxnisli: 'Outdoor (Mapbox)'
+    cir87x1cf0004h4m2mwxnisli: 'Outdoor (Mapbox)',
+    cis8mx99z000b2zo3wq3rrr1p: 'Water'
   },
   maxZoom: 16
 };
