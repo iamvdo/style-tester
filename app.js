@@ -11,9 +11,10 @@ var STATE = {
     vallonPontArc: [44.38,4.42]
   },
   styles: {
-    cir4w5nu1000vclnnqashz1ts: 'Contours (mountains)',
+    cir4w5nu1000vclnnqashz1ts: 'Mountains (Contours)',
     cir87x1cf0004h4m2mwxnisli: 'Outdoor (Mapbox)',
-    cis8mx99z000b2zo3wq3rrr1p: 'Water'
+    cis8mx99z000b2zo3wq3rrr1p: 'Water',
+    cirni0aw6000ih2nuqx3h6sk9: 'Contours only'
   },
   maxZoom: 16
 };
