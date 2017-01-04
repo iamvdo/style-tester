@@ -1,3 +1,5 @@
+// force retina detection
+L.Browser.retina = true;
 var STATE = {
   accessToken: 'pk.eyJ1IjoiaWFtdmRvIiwiYSI6IkI1NGhfYXMifQ.2FD2Px_Fh2gAZCFTxdrL7g',
   places: {
@@ -54,13 +56,14 @@ function createMaps (styleToken, center, zoom, setForms) {
   }
   function styleLeaflet () {
     return {
-      url: 'https://api.mapbox.com/styles/v1/iamvdo/' + styleToken + '/tiles/512/{z}/{x}/{y}@2x?access_token={accessToken}',
+      url: 'https://api.mapbox.com/styles/v1/iamvdo/' + styleToken + '/tiles/512/{z}/{x}/{y}?access_token={accessToken}',
       tilelayer: {
-        attribution: '',
         tileSize: 512,
         zoomOffset: -1,
+        attribution: '',
         maxZoom: 18,
-        accessToken: STATE.accessToken
+        accessToken: STATE.accessToken,
+        detectRetina: true
       },
       opts: {
         center: center,
