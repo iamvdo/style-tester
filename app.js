@@ -3,9 +3,12 @@ var STATE = {
   places: {
     montBlanc: [45.83, 6.86],
     everest: [27.99, 86.92],
+    northCape: [71.17, 25.78],
     hverfjall: [65.60, -16.87],
     craterLake: [42.94, -122.15],
-    paris: [48.85, 2.35]
+    paris: [48.85, 2.35],
+    tadoussac: [48.12,-69.7],
+    vallonPontArc: [44.38,4.42]
   },
   styles: {
     cir4w5nu1000vclnnqashz1ts: 'Contours (mountains)',
